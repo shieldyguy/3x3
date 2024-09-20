@@ -3,56 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Word Puzzle Demo</title>
+    <title>Word Puzzle Game</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div id="game-board">
-      <!-- Full 5x5 Grid with extra rows/columns -->
-      <div class="row">
-        <div class="cell" id="cell-0-0">T</div>
-        <div class="cell" id="cell-0-1">T</div>
-        <div class="cell" id="cell-0-2">T</div>
-        <div class="cell" id="cell-0-3">T</div>
-        <div class="cell" id="cell-0-4">T</div>
-      </div>
-      <div class="row">
-        <div class="cell" id="cell-1-0">T</div>
-        <div class="cell" id="cell-1-1">T</div>
-        <div class="cell" id="cell-1-2">T</div>
-        <div class="cell" id="cell-1-3">T</div>
-        <div class="cell" id="cell-1-4">T</div>
-      </div>
-      <div class="row">
-        <div class="cell" id="cell-2-0">T</div>
-        <div class="cell" id="cell-2-1">T</div>
-        <div class="cell" id="cell-2-2">T</div>
-        <div class="cell" id="cell-2-3">T</div>
-        <div class="cell" id="cell-2-4">T</div>
-      </div>
-      <div class="row">
-        <div class="cell" id="cell-3-0">T</div>
-        <div class="cell" id="cell-3-1">T</div>
-        <div class="cell" id="cell-3-2">T</div>
-        <div class="cell" id="cell-3-3">T</div>
-        <div class="cell" id="cell-3-4">T</div>
-      </div>
-      <div class="row">
-        <div class="cell" id="cell-4-0">T</div>
-        <div class="cell" id="cell-4-1">T</div>
-        <div class="cell" id="cell-4-2">T</div>
-        <div class="cell" id="cell-4-3">T</div>
-        <div class="cell" id="cell-4-4">T</div>
-      </div>
+      <!-- Row 0 -->
+      <div class="cell" id="cell-0-0" data-row="0" data-col="0">A</div>
+      <div class="cell" id="cell-0-1" data-row="0" data-col="1">B</div>
+      <div class="cell" id="cell-0-2" data-row="0" data-col="2">C</div>
+      <div class="cell" id="cell-0-3" data-row="0" data-col="3">D</div>
+      <div class="cell" id="cell-0-4" data-row="0" data-col="4">E</div>
+
+      <!-- Row 1 -->
+      <div class="cell" id="cell-1-0" data-row="1" data-col="0">F</div>
+      <div class="cell" id="cell-1-1" data-row="1" data-col="1">G</div>
+      <div class="cell" id="cell-1-2" data-row="1" data-col="2">H</div>
+      <div class="cell" id="cell-1-3" data-row="1" data-col="3">I</div>
+      <div class="cell" id="cell-1-4" data-row="1" data-col="4">J</div>
+
+      <!-- Row 2 -->
+      <div class="cell" id="cell-2-0" data-row="2" data-col="0">K</div>
+      <div class="cell" id="cell-2-1" data-row="2" data-col="1">L</div>
+      <div class="cell" id="cell-2-2" data-row="2" data-col="2">M</div>
+      <div class="cell" id="cell-2-3" data-row="2" data-col="3">N</div>
+      <div class="cell" id="cell-2-4" data-row="2" data-col="4">O</div>
+
+      <!-- Row 3 -->
+      <div class="cell" id="cell-3-0" data-row="3" data-col="0">P</div>
+      <div class="cell" id="cell-3-1" data-row="3" data-col="1">Q</div>
+      <div class="cell" id="cell-3-2" data-row="3" data-col="2">R</div>
+      <div class="cell" id="cell-3-3" data-row="3" data-col="3">S</div>
+      <div class="cell" id="cell-3-4" data-row="3" data-col="4">T</div>
+
+      <!-- Row 4 -->
+      <div class="cell" id="cell-4-0" data-row="4" data-col="0">U</div>
+      <div class="cell" id="cell-4-1" data-row="4" data-col="1">V</div>
+      <div class="cell" id="cell-4-2" data-row="4" data-col="2">W</div>
+      <div class="cell" id="cell-4-3" data-row="4" data-col="3">X</div>
+      <div class="cell" id="cell-4-4" data-row="4" data-col="4">Y</div>
     </div>
 
     <div id="controls">
-      <button onclick="rotateRow(1)">Rotate Row 1</button>
-      <button onclick="rotateRow(2)">Rotate Row 2</button>
-      <button onclick="rotateRow(3)">Rotate Row 3</button>
-      <button onclick="rotateCol(1)">Rotate Column 1</button>
-      <button onclick="rotateCol(2)">Rotate Column 2</button>
-      <button onclick="rotateCol(3)">Rotate Column 3</button>
+      <button onclick="rotateRow(0, 'right')">Rotate Row 0 Right</button>
+      <button onclick="rotateRow(0, 'left')">Rotate Row 0 Left</button>
+      <button onclick="rotateRow(1, 'right')">Rotate Row 1 Right</button>
+      <button onclick="rotateRow(1, 'left')">Rotate Row 1 Left</button>
+      <button onclick="rotateRow(2, 'right')">Rotate Row 2 Right</button>
+      <button onclick="rotateRow(2, 'left')">Rotate Row 2 Left</button>
+      <button onclick="rotateRow(3, 'right')">Rotate Row 3 Right</button>
+      <button onclick="rotateRow(3, 'left')">Rotate Row 3 Left</button>
+      <button onclick="rotateRow(4, 'right')">Rotate Row 4 Right</button>
+      <button onclick="rotateRow(4, 'left')">Rotate Row 4 Left</button>
+
+      <button onclick="rotateCol(0, 'down')">Rotate Column 0 Down</button>
+      <button onclick="rotateCol(0, 'up')">Rotate Column 0 Up</button>
+      <button onclick="rotateCol(1, 'down')">Rotate Column 1 Down</button>
+      <button onclick="rotateCol(1, 'up')">Rotate Column 1 Up</button>
+      <button onclick="rotateCol(2, 'down')">Rotate Column 2 Down</button>
+      <button onclick="rotateCol(2, 'up')">Rotate Column 2 Up</button>
+      <button onclick="rotateCol(3, 'down')">Rotate Column 3 Down</button>
+      <button onclick="rotateCol(3, 'up')">Rotate Column 3 Up</button>
+      <button onclick="rotateCol(4, 'down')">Rotate Column 4 Down</button>
+      <button onclick="rotateCol(4, 'up')">Rotate Column 4 Up</button>
     </div>
 
     <script src="script.js"></script>

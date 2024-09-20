@@ -21,23 +21,63 @@ body {
   font-size: 2rem;
   width: 80px;
   height: 80px;
+  transition: transform 0.5s ease;
 }
 
-#controls {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.cell.highlight {
+  background-color: #d4edda; /* Light green background */
 }
 
-/* Optional: style the center 3x3 grid differently */
-#cell-1-1,
-#cell-1-2,
-#cell-1-3,
-#cell-2-1,
-#cell-2-2,
-#cell-2-3,
-#cell-3-1,
-#cell-3-2,
-#cell-3-3 {
-  background-color: lightblue;
+/* Apply animation for row (right and left) */
+@keyframes shift-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shift-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-right {
+  animation: shift-right 0.5s forwards;
+}
+
+.animate-left {
+  animation: shift-left 0.5s forwards;
+}
+
+/* Apply animation for column (up and down) */
+@keyframes shift-down {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes shift-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.animate-down {
+  animation: shift-down 0.5s forwards;
+}
+
+.animate-up {
+  animation: shift-up 0.5s forwards;
 }

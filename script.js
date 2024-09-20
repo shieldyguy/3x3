@@ -1,10 +1,10 @@
 // Initialize the 5x5 grid with letters
 let grid = [
-  ["T", "T", "T", "T", "T"],
-  ["T", "T", "T", "T", "T"],
-  ["T", "T", "T", "T", "T"],
-  ["T", "T", "T", "T", "T"],
-  ["T", "T", "T", "T", "T"],
+  ["A", "B", "C", "D", "E"],
+  ["F", "G", "H", "I", "J"],
+  ["K", "L", "M", "N", "O"],
+  ["P", "Q", "R", "S", "T"],
+  ["U", "V", "W", "X", "Y"],
 ];
 
 // Function to update the DOM based on the grid array
@@ -16,7 +16,65 @@ function updateBoard() {
   }
 }
 
-// Apply a temporary animation class to each cell
+// Rotate a full row (including all 5 cells, wrapping around)
+function rotateRow(rowIndex, direction) {
+  const row = grid[rowIndex];
+  const cells = Array.from(
+    document.querySelectorAll(`.cell[data-row="${rowIndex}"]`)
+  );
+
+  // Apply temporary animation class based on direction
+  animateCells(cells, direction === "right" ? "right" : "left");
+
+  setTimeout(() => {
+    if (direction === "right") {
+      // Move the last element to the front (right rotation)
+      grid[rowIndex] = [row[4], ...row.slice(0, 4)];
+    } else {
+      // Move the first element to the back (left rotation)
+      grid[rowIndex] = [...row.slice(1), row[0]];
+    }
+    updateBoard();
+  }, 500); // Animation duration is 500ms
+}
+
+// Rotate a full column (including all 5 cells, wrapping around)
+function rotateCol(colIndex, direction) {
+  const col = [
+    grid[0][colIndex],
+    grid[1][colIndex],
+    grid[2][colIndex],
+    grid[3][colIndex],
+    grid[4][colIndex],
+  ];
+  const cells = Array.from(
+    document.querySelectorAll(`.cell[data-col="${colIndex}"]`)
+  );
+
+  // Apply temporary animation class based on direction
+  animateCells(cells, direction === "down" ? "down" : "up");
+
+  setTimeout(() => {
+    if (direction === "down") {
+      // Move the last element to the top (down rotation)
+      grid[0][colIndex] = col[4];
+      grid[1][colIndex] = col[0];
+      grid[2][colIndex] = col[1];
+      grid[3][colIndex] = col[2];
+      grid[4][colIndex] = col[3];
+    } else {
+      // Move the first element to the bottom (up rotation)
+      grid[0][colIndex] = col[1];
+      grid[1][colIndex] = col[2];
+      grid[2][colIndex] = col[3];
+      grid[3][colIndex] = col[4];
+      grid[4][colIndex] = col[0];
+    }
+    updateBoard();
+  }, 500); // Animation duration is 500ms
+}
+
+// Apply a temporary animation class to each cell in the row or column
 function animateCells(cells, direction) {
   cells.forEach((cell) => {
     cell.classList.add(`animate-${direction}`);
@@ -28,54 +86,6 @@ function animateCells(cells, direction) {
       { once: true }
     );
   });
-}
-
-// Rotate a row in the 3x3 active area (wrap around)
-function rotateRow(rowIndex) {
-  const row = grid[rowIndex];
-
-  // Select the cells in the row to animate
-  const cells = [
-    document.getElementById(`cell-${rowIndex}-1`),
-    document.getElementById(`cell-${rowIndex}-2`),
-    document.getElementById(`cell-${rowIndex}-3`),
-  ];
-
-  // Rotate the row visually
-  animateCells(cells, "right");
-
-  // Rotate the row in the data model
-  setTimeout(() => {
-    const rotated = [row[3], row[1], row[2]]; // Rotate right
-    grid[rowIndex][1] = rotated[0];
-    grid[rowIndex][2] = rotated[1];
-    grid[rowIndex][3] = rotated[2];
-    updateBoard();
-  }, 500); // Allow the animation to complete before updating
-}
-
-// Rotate a column in the 3x3 active area (wrap around)
-function rotateCol(colIndex) {
-  const col = [grid[1][colIndex], grid[2][colIndex], grid[3][colIndex]];
-
-  // Select the cells in the column to animate
-  const cells = [
-    document.getElementById(`cell-1-${colIndex}`),
-    document.getElementById(`cell-2-${colIndex}`),
-    document.getElementById(`cell-3-${colIndex}`),
-  ];
-
-  // Rotate the column visually
-  animateCells(cells, "down");
-
-  // Rotate the column in the data model
-  setTimeout(() => {
-    const rotated = [col[2], col[0], col[1]]; // Rotate down
-    grid[1][colIndex] = rotated[0];
-    grid[2][colIndex] = rotated[1];
-    grid[3][colIndex] = rotated[2];
-    updateBoard();
-  }, 500); // Allow the animation to complete before updating
 }
 
 // Initial update
