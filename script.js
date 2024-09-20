@@ -1,10 +1,10 @@
 // Initialize the 5x5 grid with letters
 let grid = [
-  ["T", "T", "B", "T", "T"],
   ["T", "T", "T", "T", "T"],
-  ["T", "A", "T", "B", "T"],
-  ["T", "T", "B", "T", "T"],
-  ["T", "G", "T", "G", "T"],
+  ["T", "T", "T", "T", "T"],
+  ["T", "T", "T", "T", "T"],
+  ["T", "T", "T", "T", "T"],
+  ["T", "T", "T", "T", "T"],
 ];
 
 // Function to update the DOM based on the grid array
@@ -16,45 +16,66 @@ function updateBoard() {
   }
 }
 
+// Apply a temporary animation class to each cell
+function animateCells(cells, direction) {
+  cells.forEach((cell) => {
+    cell.classList.add(`animate-${direction}`);
+    cell.addEventListener(
+      "animationend",
+      () => {
+        cell.classList.remove(`animate-${direction}`);
+      },
+      { once: true }
+    );
+  });
+}
+
 // Rotate a row in the 3x3 active area (wrap around)
 function rotateRow(rowIndex) {
   const row = grid[rowIndex];
-  // Only rotate the 3x3 part (indices 1, 2, 3)
-  const rotated = [row[3], row[1], row[2]]; // Rotate right
-  grid[rowIndex][1] = rotated[0];
-  grid[rowIndex][2] = rotated[1];
-  grid[rowIndex][3] = rotated[2];
-  updateBoard();
+
+  // Select the cells in the row to animate
+  const cells = [
+    document.getElementById(`cell-${rowIndex}-1`),
+    document.getElementById(`cell-${rowIndex}-2`),
+    document.getElementById(`cell-${rowIndex}-3`),
+  ];
+
+  // Rotate the row visually
+  animateCells(cells, "right");
+
+  // Rotate the row in the data model
+  setTimeout(() => {
+    const rotated = [row[3], row[1], row[2]]; // Rotate right
+    grid[rowIndex][1] = rotated[0];
+    grid[rowIndex][2] = rotated[1];
+    grid[rowIndex][3] = rotated[2];
+    updateBoard();
+  }, 500); // Allow the animation to complete before updating
 }
 
 // Rotate a column in the 3x3 active area (wrap around)
 function rotateCol(colIndex) {
   const col = [grid[1][colIndex], grid[2][colIndex], grid[3][colIndex]];
-  // Rotate column (wrap around)
-  const rotated = [col[2], col[0], col[1]];
-  grid[1][colIndex] = rotated[0];
-  grid[2][colIndex] = rotated[1];
-  grid[3][colIndex] = rotated[2];
-  updateBoard();
-}
 
-// Check if all rows and columns in the 3x3 area form valid words
-function checkValidWords() {
-  const validWords = ["CAT", "DOG", "TAP"]; // Use a real dictionary
+  // Select the cells in the column to animate
+  const cells = [
+    document.getElementById(`cell-1-${colIndex}`),
+    document.getElementById(`cell-2-${colIndex}`),
+    document.getElementById(`cell-3-${colIndex}`),
+  ];
 
-  // Check rows (1, 2, 3)
-  for (let i = 1; i <= 3; i++) {
-    const rowWord = grid[i].slice(1, 4).join("");
-    if (!validWords.includes(rowWord)) return false;
-  }
+  // Rotate the column visually
+  animateCells(cells, "down");
 
-  // Check columns (1, 2, 3)
-  for (let j = 1; j <= 3; j++) {
-    const colWord = [grid[1][j], grid[2][j], grid[3][j]].join("");
-    if (!validWords.includes(colWord)) return false;
-  }
-
-  return true;
+  // Rotate the column in the data model
+  setTimeout(() => {
+    const rotated = [col[2], col[0], col[1]]; // Rotate down
+    grid[1][colIndex] = rotated[0];
+    grid[2][colIndex] = rotated[1];
+    grid[3][colIndex] = rotated[2];
+    updateBoard();
+  }, 500); // Allow the animation to complete before updating
 }
 
 // Initial update
