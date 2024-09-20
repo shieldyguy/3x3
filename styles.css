@@ -21,7 +21,8 @@ body {
   font-size: 2rem;
   width: 80px;
   height: 80px;
-  transition: transform 0.5s ease;
+  transition: transform 1s ease; /* Increased transition duration */
+  user-select: none; /* Prevent text selection */
 }
 
 .cell.highlight {
@@ -48,11 +49,11 @@ body {
 }
 
 .animate-right {
-  animation: shift-right 0.5s forwards;
+  animation: shift-right 1s forwards; /* Increased duration to 1 second */
 }
 
 .animate-left {
-  animation: shift-left 0.5s forwards;
+  animation: shift-left 1s forwards; /* Increased duration to 1 second */
 }
 
 /* Apply animation for column (up and down) */
@@ -75,9 +76,9 @@ body {
 }
 
 .animate-down {
-  animation: shift-down 0.5s forwards;
+  animation: shift-down 1s forwards; /* Increased duration to 1 second */
 }
 
 .animate-up {
-  animation: shift-up 0.5s forwards;
+  animation: shift-up 1s forwards; /* Increased duration to 1 second */
 }
