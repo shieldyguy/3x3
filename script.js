@@ -88,5 +88,58 @@ function animateCells(cells, direction) {
   });
 }
 
+// Add event listeners for drag functionality
+function addDragAndDropListeners() {
+  const cells = document.querySelectorAll(".cell");
+
+  cells.forEach((cell) => {
+    cell.setAttribute("draggable", "true");
+
+    cell.addEventListener("dragstart", (event) => {
+      event.dataTransfer.setData("text/plain", event.target.id);
+    });
+
+    cell.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    });
+
+    cell.addEventListener("drop", (event) => {
+      event.preventDefault();
+      const draggedCellId = event.dataTransfer.getData("text/plain");
+      const draggedCell = document.getElementById(draggedCellId);
+      const draggedRow = parseInt(draggedCell.dataset.row);
+      const draggedCol = parseInt(draggedCell.dataset.col);
+      const targetRow = parseInt(event.target.dataset.row);
+      const targetCol = parseInt(event.target.dataset.col);
+
+      // Determine if the drop is valid for row or column rotation
+      if (draggedRow === targetRow) {
+        // Rotate row
+        const direction = draggedCol < targetCol ? "right" : "left";
+        rotateRow(draggedRow, direction);
+      } else if (draggedCol === targetCol) {
+        // Rotate column
+        const direction = draggedRow < targetRow ? "down" : "up";
+        rotateCol(draggedCol, direction);
+      }
+    });
+  });
+}
+
+// Highlight the middle 3x3 cells
+const highlightCells = () => {
+  for (let i = 1; i < 4; i++) {
+    for (let j = 1; j < 4; j++) {
+      document.getElementById(`cell-${i}-${j}`).classList.add("highlight");
+    }
+  }
+};
+
+// Call the highlight function on initial load
+highlightCells();
+
 // Initial update
 updateBoard();
+
+// Add drag and drop listeners after DOM content is loaded
+document.addEventListener("DOMContentLoaded", addDragAndDropListeners);
